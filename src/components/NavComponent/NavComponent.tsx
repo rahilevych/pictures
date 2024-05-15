@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './NavComponent.scss';
 type NavComponentProps = {};
 
 const NavComponent = (props: NavComponentProps) => {
