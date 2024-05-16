@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { FC } from 'react';
+import './ImageComponent.scss';
+import { ImageType } from '../../assets/types/ImageType';
 
-type ImageComponentProps = {};
+type ImageComponentProps = {
+  image: ImageType;
+};
 
-const ImageComponent = (props: ImageComponentProps) => {
-  return <div>ImageComponent</div>;
+const ImageComponent: FC<ImageComponentProps> = ({ image }) => {
+  console.log(image);
+  return (
+    <div className='image'>
+      <img src={image?.webformatURL} alt='' />
+    </div>
+  );
 };
 
 export default ImageComponent;
