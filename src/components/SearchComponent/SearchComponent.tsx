@@ -1,9 +1,13 @@
-import React from 'react';
-
+import { FC } from 'react';
+import './SearchComponent.scss';
 type SearchComponentProps = {};
 
-const SearchComponent = (props: SearchComponentProps) => {
-  return <div>SearchComponent</div>;
+const SearchComponent: FC<SearchComponentProps> = () => {
+  return (
+    <div className='search'>
+      <input type='text' className='search__input' placeholder='Search' />
+    </div>
+  );
 };
 
 export default SearchComponent;
