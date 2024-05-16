@@ -7,12 +7,10 @@ const NavComponent = (props: NavComponentProps) => {
   return (
     <nav className='nav'>
       <div className='container nav__container'>
-        {' '}
         <p className='nav__logo'>LOGO</p>
-        <button className='nav__btn'>
-          {' '}
-          <Link to='/registration'>Registration</Link>
-        </button>
+        <Link to='/registration'>
+          <button className='nav__btn'>Log in</button>{' '}
+        </Link>
       </div>
     </nav>
   );
