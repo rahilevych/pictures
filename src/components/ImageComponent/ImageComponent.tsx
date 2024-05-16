@@ -7,7 +7,6 @@ type ImageComponentProps = {
 };
 
 const ImageComponent: FC<ImageComponentProps> = ({ image }) => {
-  console.log(image);
   return (
     <div className='image'>
       <img src={image?.webformatURL} alt='' />

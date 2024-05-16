@@ -7,14 +7,15 @@ import { ImageType } from '../../assets/types/ImageType';
 
 type MainBlockComponentProps = {
   images: ImageType[] | null;
+  input: React.ChangeEventHandler<HTMLInputElement>;
 };
 
-const MainBlockComponent: FC<MainBlockComponentProps> = ({ images }) => {
+const MainBlockComponent: FC<MainBlockComponentProps> = ({ images, input }) => {
   return (
     <main className='main'>
-      <SearchBlock />
+      <SearchBlock input={input} />
       <div className='container main__container'>
-        <MainFilters />
+        {/* <MainFilters /> */}
         <MainContentComponent images={images} />
       </div>
     </main>

@@ -20,18 +20,25 @@ const HomePage = () => {
         `https://pixabay.com/api/?key=${apiKey}&q=${tag}&per_page=${photosPerPage}`
       );
       setImages(response.data.hits);
+      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
   };
-
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value) {
+      setTag(e.target.value);
+    } else {
+      setTag('blue');
+    }
+  };
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [tag]);
 
   return (
     <div className='wrapper'>
-      <MainBlockComponent images={images} />
+      <MainBlockComponent images={images} input={handleChange} />
     </div>
   );
 };
