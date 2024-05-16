@@ -1,17 +1,21 @@
-import React from 'react';
+import { FC } from 'react';
 import MainFilters from '../MainFilters/MainFilters';
 import MainContentComponent from '../MainContentComponent/MainContentComponent';
 import './MainBlockComponent.scss';
+import SearchBlock from '../SearchBlock/SearchBlock';
+import { ImageType } from '../../assets/types/ImageType';
 
-type Props = {};
+type MainBlockComponentProps = {
+  images: ImageType[] | null;
+};
 
-const MainBlockComponent = (props: Props) => {
+const MainBlockComponent: FC<MainBlockComponentProps> = ({ images }) => {
   return (
     <main className='main'>
-      <div className='container'>
-        MainBlock
+      <SearchBlock />
+      <div className='container main__container'>
         <MainFilters />
-        <MainContentComponent />
+        <MainContentComponent images={images} />
       </div>
     </main>
   );
