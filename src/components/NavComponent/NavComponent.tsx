@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { FC } from 'react';
 import './NavComponent.scss';
 import { Link } from 'react-router-dom';
-type NavComponentProps = {};
+import SearchComponent from '../SearchComponent/SearchComponent';
+type NavComponentProps = {
+  input: React.ChangeEventHandler<HTMLInputElement>;
+};
 
-const NavComponent = (props: NavComponentProps) => {
+const NavComponent: FC<NavComponentProps> = ({ input }) => {
   return (
     <nav className='nav'>
       <div className='container nav__container'>
         <p className='nav__logo'>LOGO</p>
+        <SearchComponent input={input} />
         <Link to='/registration'>
           <button className='nav__btn'>Log in</button>{' '}
         </Link>

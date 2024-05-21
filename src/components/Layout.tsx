@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { FC } from 'react';
 import NavComponent from './NavComponent/NavComponent';
 import HeaderComponent from './SearchBlock/SearchBlock';
 import { Outlet } from 'react-router';
 import Footer from './FooterComponent/Footer';
-
-const Layout = () => {
+type LayoutProps = {
+  input: React.ChangeEventHandler<HTMLInputElement>;
+};
+const Layout: FC<LayoutProps> = ({ input }) => {
   return (
     <div>
-      <NavComponent />
+      <NavComponent input={input} />
       <Outlet />
       <Footer />
     </div>

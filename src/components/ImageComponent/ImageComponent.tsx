@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import './ImageComponent.scss';
 import { ImageType } from '../../assets/types/ImageType';
+import { NavLink } from 'react-router-dom';
 
 type ImageComponentProps = {
   image: ImageType;
@@ -8,9 +9,11 @@ type ImageComponentProps = {
 
 const ImageComponent: FC<ImageComponentProps> = ({ image }) => {
   return (
-    <div className='image'>
-      <img src={image?.webformatURL} alt='' />
-    </div>
+    <NavLink to={`/image/${image.id}`}>
+      <div className='image'>
+        <img src={image?.webformatURL} alt='' />
+      </div>
+    </NavLink>
   );
 };
 
