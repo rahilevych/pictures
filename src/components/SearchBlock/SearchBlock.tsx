@@ -7,14 +7,14 @@ type SearchBlockProps = {
   input: React.ChangeEventHandler<HTMLInputElement>;
 };
 
-const SearchBlock: FC<SearchBlockProps> = ({ input }) => {
+function SearchBlock() {
   return (
     <header className='search-block'>
       <div className='container search-block__container'>
-        <SearchComponent input={input} />
+        <SearchComponent />
       </div>
     </header>
   );
-};
+}
 
 export default SearchBlock;

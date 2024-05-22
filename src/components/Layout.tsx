@@ -6,14 +6,14 @@ import Footer from './FooterComponent/Footer';
 type LayoutProps = {
   input: React.ChangeEventHandler<HTMLInputElement>;
 };
-const Layout: FC<LayoutProps> = ({ input }) => {
+function Layout() {
   return (
     <div>
-      <NavComponent input={input} />
+      <NavComponent />
       <Outlet />
       <Footer />
     </div>
   );
-};
+}
 
 export default Layout;

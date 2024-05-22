@@ -1,10 +1,12 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 import './SearchComponent.scss';
+import { ImagesContext } from '../../context/ImagesContext';
 type SearchComponentProps = {
   input: React.ChangeEventHandler<HTMLInputElement>;
 };
 
-const SearchComponent: FC<SearchComponentProps> = ({ input }) => {
+function SearchComponent() {
+  const { handleInputChange } = useContext(ImagesContext);
   return (
     <div className='search'>
       <i className='ph ph-magnifying-glass search__icon'></i>
@@ -12,13 +14,13 @@ const SearchComponent: FC<SearchComponentProps> = ({ input }) => {
         type='text'
         className='search__input'
         placeholder='Search'
-        onChange={input}
+        onChange={handleInputChange}
       />
       <button className='search__btn'>
         All images <i className='ph ph-caret-down '></i>
       </button>
     </div>
   );
-};
+}
 
 export default SearchComponent;

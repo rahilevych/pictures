@@ -6,18 +6,18 @@ type NavComponentProps = {
   input: React.ChangeEventHandler<HTMLInputElement>;
 };
 
-const NavComponent: FC<NavComponentProps> = ({ input }) => {
+function NavComponent() {
   return (
     <nav className='nav'>
       <div className='container nav__container'>
         <p className='nav__logo'>LOGO</p>
-        <SearchComponent input={input} />
+
         <Link to='/registration'>
           <button className='nav__btn'>Log in</button>{' '}
         </Link>
       </div>
     </nav>
   );
-};
+}
 
 export default NavComponent;
