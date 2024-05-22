@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router';
 import './App.scss';
-import HomePage from './pages/MainPage/HomePage';
+import HomePage from './pages/HomePage/HomePage';
 import DetailedPage from './pages/DetailedPage/DetailedPage';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 import RegistrationPage from './pages/AutorizationPage/AutorizationPage';
