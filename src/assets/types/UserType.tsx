@@ -1,5 +1,4 @@
 export interface UserType {
-  userName: string;
-  email: string;
-  password: string;
+  email: string | null | undefined;
+  id: string | null | undefined;
 }
