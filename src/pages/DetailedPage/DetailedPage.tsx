@@ -1,7 +1,9 @@
-import React, { FC } from 'react';
+import React, { FC, useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { ImageType } from '../../assets/types/ImageType';
 import './DetailedPage.scss';
+import { AuthContext } from '../../context/AutorizationContext';
+import { auth } from '../../config/firebase';
 
 type DetailedPageProps = {
   images: ImageType[] | null;
@@ -10,6 +12,28 @@ type DetailedPageProps = {
 const DetailedPage: FC<DetailedPageProps> = ({ images }) => {
   const { id } = useParams();
   const img = images?.find((image) => image.id === Number(id));
+
+  const { addToFavorites, isLoggedIn } = useContext(AuthContext);
+
+  const handleAddToFavorites = () => {
+    console.log(auth.currentUser?.uid);
+    if (img && isLoggedIn) {
+      addToFavorites({ url: img?.largeImageURL })
+        .then(() => {
+          console.log('Image added to favorites');
+          alert('added');
+        })
+        .catch((error) => {
+          console.error('Error adding image to favorites:', error);
+          alert('error');
+        });
+    } else {
+      console.log('User must be logged in to add to favorites');
+    }
+  };
+  if (!img) {
+    return <div>Image not found</div>;
+  }
 
   return (
     <div className='wrapper details__wrapper'>
@@ -25,7 +49,9 @@ const DetailedPage: FC<DetailedPageProps> = ({ images }) => {
                   <i className='ph ph-heart-straight'></i>
                 </div>
                 <div className='details__icon'>
-                  <i className='ph ph-bookmark-simple'></i>
+                  <i
+                    onClick={handleAddToFavorites}
+                    className='ph ph-bookmark-simple'></i>
                 </div>
                 <div className='details__icon'>
                   <i className='ph ph-share-network'></i>
