@@ -4,12 +4,15 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App.tsx';
 import './index.scss';
 import { ImagesContextProvider } from './context/ImagesContext.tsx';
+import { AuthContextProvider } from './context/AutorizationContext.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
-    <ImagesContextProvider>
+    <AuthContextProvider>
       {' '}
-      <App />
-    </ImagesContextProvider>
+      <ImagesContextProvider>
+        <App />{' '}
+      </ImagesContextProvider>
+    </AuthContextProvider>
   </BrowserRouter>
 );

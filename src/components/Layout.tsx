@@ -3,9 +3,7 @@ import NavComponent from './NavComponent/NavComponent';
 import HeaderComponent from './SearchBlock/SearchBlock';
 import { Outlet } from 'react-router';
 import Footer from './FooterComponent/Footer';
-type LayoutProps = {
-  input: React.ChangeEventHandler<HTMLInputElement>;
-};
+
 function Layout() {
   return (
     <div>

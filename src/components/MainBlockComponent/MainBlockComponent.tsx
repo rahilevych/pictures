@@ -31,6 +31,20 @@ const MainBlockComponent = () => {
             showLastButton
             onChange={handlePageChange}
             page={currentPage}
+            // sx={{
+            //   '& .MuiPaginationItem-root': {
+            //     color: 'yellow',
+            //     backgroundColor: 'black',
+            //   },
+            //   '& .MuiPaginationItem-root:hover': {
+            //     color: 'red',
+            //     backgroundColor: 'blue',
+            //   },
+            //   '& .Mui-selected': {
+            //     color: 'red',
+            //     backgroundColor: 'red',
+            //   },
+            // }}
           />
         </div>
       </div>

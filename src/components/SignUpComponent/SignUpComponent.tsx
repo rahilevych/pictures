@@ -1,9 +1,7 @@
 import React, { useContext, useState } from 'react';
 import './SignUpComponent.scss';
-import { auth } from '../../config/firebase.ts';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+
 import { AuthContext } from '../../context/AutorizationContext.tsx';
-import { set } from 'firebase/database';
 
 const SignUpComponent = () => {
   const [errors, setErrors] = useState<{ email?: string; password?: string }>(
@@ -49,6 +47,7 @@ const SignUpComponent = () => {
     }
     return '';
   };
+
   console.log(user);
   console.log(email);
   console.log(password);

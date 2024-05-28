@@ -3,9 +3,10 @@ import React, { useContext, useState } from 'react';
 import './LogInComponent.scss';
 import { AuthContext } from '../../context/AutorizationContext';
 import { auth } from '../../config/firebase';
+import { Navigate } from 'react-router';
 
 const LogInComponent = () => {
-  const { signIn, setPassword, setEmail, email, password } =
+  const { signIn, setPassword, setEmail, email, password, isLoggedIn } =
     useContext(AuthContext);
   const [errors, setErrors] = useState<{ email?: string; password?: string }>(
     {}
@@ -50,6 +51,10 @@ const LogInComponent = () => {
   };
 
   console.log(auth.currentUser);
+  if (isLoggedIn) {
+    return <Navigate to={'/'} replace={true} />;
+  }
+
   return (
     <div className='login'>
       <form onSubmit={submitForm}>

@@ -11,6 +11,8 @@ import { ImageType } from './assets/types/ImageType';
 import { apiKey } from './config/APIKey';
 import { ImagesContext, ImagesContextProvider } from './context/ImagesContext';
 import AutorizationPage from './pages/AutorizationPage/AutorizationPage';
+import SignUpComponent from './components/SignUpComponent/SignUpComponent';
+import LogInComponent from './components/LogInComponent/LogInComponent';
 
 function App() {
   const { images } = useContext(ImagesContext);
@@ -21,8 +23,8 @@ function App() {
         <Route index element={<HomePage />} />
         <Route path='image/:id' element={<DetailedPage images={images} />} />
         <Route path='*' element={<NotFoundPage />} />
+        <Route path='registration' element={<AutorizationPage />} />
       </Route>
-      <Route path='registration' element={<AutorizationPage />} />
     </Routes>
   );
 }
