@@ -10,6 +10,7 @@ import { auth, db } from '../config/firebase';
 import { Navigate } from 'react-router';
 import {
   addDoc,
+  arrayRemove,
   arrayUnion,
   collection,
   doc,
@@ -47,6 +48,7 @@ type AuthContextType = {
   logOut: () => Promise<void>;
 
   addToFavorites: (image: { url: string }) => Promise<void>;
+  deleteToFavorites: (image: { url: string }) => Promise<void>;
 
   isLoggedIn: boolean;
 };
@@ -74,6 +76,7 @@ const initAuthContextValue = {
   isLoggedIn: false,
 
   addToFavorites: () => Promise.resolve(),
+  deleteToFavorites: () => Promise.resolve(),
 
   setSignUpPressed: () => {
     throw new Error('context not initialised');
@@ -132,6 +135,17 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       throw new Error('User is not authenticated');
     }
   };
+  const deleteToFavorites = async (image: { url: string }) => {
+    if (auth.currentUser) {
+      const userDocRef = doc(db, 'users', auth.currentUser.uid);
+      await updateDoc(userDocRef, {
+        imagesList: arrayRemove(image),
+      });
+    } else {
+      throw new Error('User is not authenticated');
+    }
+  };
+
   const fetchSavedImg = async () => {
     try {
       const user = auth.currentUser;
@@ -206,6 +220,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   return (
     <AuthContext.Provider
       value={{
+        deleteToFavorites,
         images,
         user,
         setUser,

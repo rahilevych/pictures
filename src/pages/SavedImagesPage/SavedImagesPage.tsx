@@ -3,9 +3,12 @@ import { AuthContext } from '../../context/AutorizationContext';
 import { auth, db } from '../../config/firebase';
 import { collection, onSnapshot, query } from 'firebase/firestore';
 import './SavedImagesPage.scss';
+import { useParams } from 'react-router';
 const SavedImagesPage = () => {
-  const { fetchSavedImg, images } = useContext(AuthContext);
+  const { fetchSavedImg, images, deleteToFavorites, isLoggedIn } =
+    useContext(AuthContext);
   console.log(auth.currentUser);
+  //   const img = images?.find((image) => image.url === url);
 
   type User = {
     email: string;
@@ -31,6 +34,24 @@ const SavedImagesPage = () => {
   //       setImages(usersArray);
   //     });
   //   };
+
+  //   const handleDeleteFromFavorites = () => {
+  //     console.log(auth.currentUser?.uid);
+  //     if (img && isLoggedIn) {
+  //       deleteToFavorites({ url: img?.largeImageURL })
+  //         .then(() => {
+  //           console.log('Image added to favorites');
+  //           alert('added');
+  //         })
+  //         .catch((error) => {
+  //           console.error('Error adding image to favorites:', error);
+  //           alert('error');
+  //         });
+  //     } else {
+  //       console.log('User must be logged in to add to favorites');
+  //     }
+  //   };
+
   console.log(images);
   useEffect(() => {
     fetchSavedImg();
@@ -42,9 +63,18 @@ const SavedImagesPage = () => {
         <main className='saved'>
           <div className='saved__images'>
             {images &&
-              images.map((url, index) => (
-                <div className='image'>
-                  <img src={url.url} alt='' />
+              images.map((image, index) => (
+                <div className='saved__block'>
+                  <div className='image'>
+                    <img src={image.url} key={index} alt='' />
+                  </div>
+                  <button
+                    onClick={() => {
+                      deleteToFavorites(image);
+                      fetchSavedImg();
+                    }}>
+                    delete img
+                  </button>
                 </div>
               ))}
           </div>

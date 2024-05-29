@@ -29,7 +29,7 @@ function App() {
           <Route path='image/:id' element={<DetailedPage images={images} />} />
           <Route path='*' element={<NotFoundPage />} />
           <Route path='registration' element={<AutorizationPage />} />
-          <Route path='saved' element={<SavedImagesPage />} />
+          <Route path='saved/' element={<SavedImagesPage />} />
         </Route>
       </Routes>
     </>

@@ -75,6 +75,11 @@ export const ImagesContextProvider = ({
   ): void => {
     setCurrentPage(value);
   };
+  // const removeImage = (id:number)=>{
+  //   if(images){
+  //     setImages(images.filter(image=>image.id!==id))
+  //   }
+  // }
 
   return (
     <ImagesContext.Provider
