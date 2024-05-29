@@ -41,7 +41,7 @@ const DetailedPage: FC<DetailedPageProps> = ({ images }) => {
         <main className='details'>
           <div className='details__descr'>
             <div className='details__img'>
-              <img src={img?.largeImageURL} alt='' />
+              <img src={img?.webformatURL} alt='' />
             </div>
             <div className='details__info'>
               <div className='details__row'>

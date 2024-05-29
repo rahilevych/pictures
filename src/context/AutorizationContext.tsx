@@ -13,11 +13,24 @@ import {
   arrayUnion,
   collection,
   doc,
+  getDoc,
+  getDocs,
+  query,
   setDoc,
   updateDoc,
 } from 'firebase/firestore';
+import { ImageType } from '../assets/types/ImageType';
+import { set } from 'firebase/database';
 //define type of context
+
+type Image = {
+  url: string;
+};
+
 type AuthContextType = {
+  images: Image[] | null;
+  // setImages: (images: ImageType[]) => void;
+  fetchSavedImg: () => Promise<void>;
   user: UserType | null;
   email: string;
   password: string;
@@ -40,6 +53,8 @@ type AuthContextType = {
 
 //define the initial value of context
 const initAuthContextValue = {
+  images: null,
+  fetchSavedImg: () => Promise.resolve(),
   user: {} as UserType,
   setUser: () => {
     throw new Error('context not initialised');
@@ -86,6 +101,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   const [loggedOut, setLoggedOut] = useState<boolean>(false);
   const [signUpPressed, setSignUpPressed] = useState<boolean>(true);
   const [loginPressed, setLoginPressed] = useState<boolean>(false);
+  const [images, setImages] = useState<Image[] | null>(null);
 
   const register = async () => {
     try {
@@ -114,6 +130,32 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       });
     } else {
       throw new Error('User is not authenticated');
+    }
+  };
+  const fetchSavedImg = async () => {
+    try {
+      const user = auth.currentUser;
+      if (!user) {
+        throw new Error('user not logged in');
+      }
+      const userDocRef = doc(db, 'users', user.uid);
+      const userDoc = await getDoc(userDocRef);
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        setImages(userData.imagesList);
+      }
+
+      // const imagesCollectionRef = collection(db, 'users', userId, 'imagesList');
+      // const queryImages = query(imagesCollectionRef);
+      // const querySnapshot = await getDocs(queryImages);
+      // console.log(querySnapshot);
+      // const images = querySnapshot.docs.map((doc) => ({
+      //   id: doc.id,
+      //   ...doc.data(),
+      // }));
+      // console.log(userId);
+    } catch (error) {
+      console.error('error fetching', error);
     }
   };
 
@@ -164,6 +206,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   return (
     <AuthContext.Provider
       value={{
+        images,
         user,
         setUser,
         register,
@@ -179,6 +222,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
         setSignUpPressed,
         loginPressed,
         signUpPressed,
+        fetchSavedImg,
       }}>
       {children}
     </AuthContext.Provider>

@@ -4,6 +4,7 @@ import './LogInComponent.scss';
 import { AuthContext } from '../../context/AutorizationContext';
 import { auth } from '../../config/firebase';
 import { Navigate } from 'react-router';
+import toast from 'react-hot-toast';
 
 const LogInComponent = () => {
   const { signIn, setPassword, setEmail, email, password, isLoggedIn } =
@@ -51,7 +52,9 @@ const LogInComponent = () => {
   };
 
   console.log(auth.currentUser);
+  const notify = () => toast('You are logged succesfully');
   if (isLoggedIn) {
+    notify();
     return <Navigate to={'/'} replace={true} />;
   }
 

@@ -13,19 +13,26 @@ import { ImagesContext, ImagesContextProvider } from './context/ImagesContext';
 import AutorizationPage from './pages/AutorizationPage/AutorizationPage';
 import SignUpComponent from './components/SignUpComponent/SignUpComponent';
 import LogInComponent from './components/LogInComponent/LogInComponent';
+import SavedImagesPage from './pages/SavedImagesPage/SavedImagesPage';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   const { images } = useContext(ImagesContext);
 
   return (
-    <Routes>
-      <Route path='/' element={<Layout />}>
-        <Route index element={<HomePage />} />
-        <Route path='image/:id' element={<DetailedPage images={images} />} />
-        <Route path='*' element={<NotFoundPage />} />
-        <Route path='registration' element={<AutorizationPage />} />
-      </Route>
-    </Routes>
+    <>
+      {' '}
+      <Toaster />
+      <Routes>
+        <Route path='/' element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route path='image/:id' element={<DetailedPage images={images} />} />
+          <Route path='*' element={<NotFoundPage />} />
+          <Route path='registration' element={<AutorizationPage />} />
+          <Route path='saved' element={<SavedImagesPage />} />
+        </Route>
+      </Routes>
+    </>
   );
 }
 

@@ -40,9 +40,14 @@ function NavComponent() {
           </Link>
         )}
         {isLoggedIn && (
-          <button className='nav__btn' onClick={logOut}>
-            Log out
-          </button>
+          <>
+            <button className='nav__btn' onClick={logOut}>
+              Log out
+            </button>
+            <NavLink to={'/saved'}>
+              <p className='nav__logo'>saved images</p>
+            </NavLink>
+          </>
         )}
       </div>
     </nav>
