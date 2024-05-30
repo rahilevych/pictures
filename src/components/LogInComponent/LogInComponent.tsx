@@ -1,14 +1,15 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState } from "react";
 
-import './LogInComponent.scss';
-import { AuthContext } from '../../context/AutorizationContext';
-import { auth } from '../../config/firebase';
-import { Navigate } from 'react-router';
-import toast from 'react-hot-toast';
+import "./LogInComponent.scss";
+import { AuthContext } from "../../context/AutorizationContext";
+import { auth } from "../../config/firebase";
+import { Navigate } from "react-router";
+import toast from "react-hot-toast";
 
 const LogInComponent = () => {
   const { signIn, setPassword, setEmail, email, password, isLoggedIn } =
     useContext(AuthContext);
+  // REVIEW very nice custom input validation
   const [errors, setErrors] = useState<{ email?: string; password?: string }>(
     {}
   );
@@ -37,49 +38,50 @@ const LogInComponent = () => {
 
   const validateEmail = (email: string) => {
     if (!email) {
-      return 'Email is required';
+      return "Email is required";
     } else if (!/\S+@\S+\.\S+/.test(email)) {
-      return 'invalid  email';
+      return "invalid  email";
     }
   };
   const validatePassword = (password: string) => {
     if (!password) {
-      return 'Password is required';
+      return "Password is required";
     } else if (password.length < 6) {
-      return 'Password is too short';
+      return "Password is too short";
     }
-    return '';
+    return "";
   };
 
   console.log(auth.currentUser);
-  const notify = () => toast('You are logged succesfully');
+  // REVIEW Toast packages are nice , but it doesn't take that much to build our own custom ones ;)
+  const notify = () => toast("You are logged succesfully");
   if (isLoggedIn) {
     notify();
-    return <Navigate to={'/'} replace={true} />;
+    return <Navigate to={"/"} replace={true} />;
   }
 
   return (
-    <div className='login'>
+    <div className="login">
       <form onSubmit={submitForm}>
-        <div className='login__input'>
-          <label htmlFor='email-username'>Email:</label>
+        <div className="login__input">
+          <label htmlFor="email-username">Email:</label>
           <input
-            type='text'
-            id='email-username'
-            name='email-username'
+            type="text"
+            id="email-username"
+            name="email-username"
             onChange={handleInputChangeEmail}
           />
-          {errors.email && <div className='error'>{errors.email}</div>}
+          {errors.email && <div className="error">{errors.email}</div>}
         </div>
-        <div className='login__input'>
-          <label htmlFor='password'>Password:</label>
+        <div className="login__input">
+          <label htmlFor="password">Password:</label>
           <input
-            type='password'
-            id='password'
-            name='password'
+            type="password"
+            id="password"
+            name="password"
             onChange={handleInputChangePass}
           />
-          {errors.password && <div className='error'>{errors.password}</div>}
+          {errors.password && <div className="error">{errors.password}</div>}
         </div>
         <button onClick={signIn}>Log In</button>
       </form>
