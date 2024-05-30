@@ -1,13 +1,13 @@
-import { ReactNode, createContext, useEffect, useState } from 'react';
-import { UserType } from '../assets/types/UserType';
+import { ReactNode, createContext, useEffect, useState } from "react";
+import { UserType } from "../assets/types/UserType";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
-} from 'firebase/auth';
-import { auth, db } from '../config/firebase';
-import { Navigate } from 'react-router';
+} from "firebase/auth";
+import { auth, db } from "../config/firebase";
+import { Navigate } from "react-router";
 import {
   addDoc,
   arrayUnion,
@@ -18,9 +18,9 @@ import {
   query,
   setDoc,
   updateDoc,
-} from 'firebase/firestore';
-import { ImageType } from '../assets/types/ImageType';
-import { set } from 'firebase/database';
+} from "firebase/firestore";
+import { ImageType } from "../assets/types/ImageType";
+import { set } from "firebase/database";
 //define type of context
 
 type Image = {
@@ -57,29 +57,29 @@ const initAuthContextValue = {
   fetchSavedImg: () => Promise.resolve(),
   user: {} as UserType,
   setUser: () => {
-    throw new Error('context not initialised');
+    throw new Error("context not initialised");
   },
   setPassword: () => {
-    throw new Error('context not initialised');
+    throw new Error("context not initialised");
   },
   setEmail: () => {
-    throw new Error('context not initialised');
+    throw new Error("context not initialised");
   },
   register: () => Promise.resolve(),
   signIn: () => Promise.resolve(),
   logOut: () => Promise.resolve(),
-  email: '',
-  password: '',
+  email: "",
+  password: "",
   loggedIn: false,
   isLoggedIn: false,
 
   addToFavorites: () => Promise.resolve(),
 
   setSignUpPressed: () => {
-    throw new Error('context not initialised');
+    throw new Error("context not initialised");
   },
   setLoginPressed: () => {
-    throw new Error('context not initialised');
+    throw new Error("context not initialised");
   },
   loginPressed: false,
   signUpPressed: false,
@@ -93,10 +93,13 @@ type AuthContextProviderProps = {
 export const AuthContext = createContext<AuthContextType>(initAuthContextValue);
 
 export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
+  // REVIEW very unusual to declare a state variable as a let variable. That also create other Typescript issues
   let [user, setUser] = useState<UserType | null>(null);
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  // REVIEW TS does a good job at infering types when they are primitive values (strings, numbers, booleans,). no need to type them ourselves.
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   // const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  // REVIEW "One source of truth" : what determines if our user is logged in or not, is the content of our user variable. Better to check that to know if the user is logged in or not. Creating another state for that creates a second "source of truth" = when my user is logged in? when isLoggedIn===true or when user !== null??
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [loggedOut, setLoggedOut] = useState<boolean>(false);
   const [signUpPressed, setSignUpPressed] = useState<boolean>(true);
@@ -107,9 +110,10 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       const user = auth.currentUser;
+      // REVIEW user is typed as any, help TS to type it.
       if (user) {
         setUser({ email: user.email, id: user.uid });
-        await setDoc(doc(db, 'users', user.uid), {
+        await setDoc(doc(db, "users", user.uid), {
           email: user.email,
           imagesList: [],
         });
@@ -117,28 +121,28 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     } catch (error) {
       console.log(error);
     } finally {
-      setEmail('');
-      setPassword('');
+      setEmail("");
+      setPassword("");
     }
   };
 
   const addToFavorites = async (image: { url: string }) => {
     if (auth.currentUser) {
-      const userDocRef = doc(db, 'users', auth.currentUser.uid);
+      const userDocRef = doc(db, "users", auth.currentUser.uid);
       await updateDoc(userDocRef, {
         imagesList: arrayUnion(image),
       });
     } else {
-      throw new Error('User is not authenticated');
+      throw new Error("User is not authenticated");
     }
   };
   const fetchSavedImg = async () => {
     try {
       const user = auth.currentUser;
       if (!user) {
-        throw new Error('user not logged in');
+        throw new Error("user not logged in");
       }
-      const userDocRef = doc(db, 'users', user.uid);
+      const userDocRef = doc(db, "users", user.uid);
       const userDoc = await getDoc(userDocRef);
       if (userDoc.exists()) {
         const userData = userDoc.data();
@@ -155,7 +159,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       // }));
       // console.log(userId);
     } catch (error) {
-      console.error('error fetching', error);
+      console.error("error fetching", error);
     }
   };
 
@@ -171,6 +175,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
         setLoggedOut(false);
       }
     } catch (error) {
+      // REVIEW give the user feedback, otherwise he won't know
       console.log(error);
     }
   };
@@ -223,7 +228,8 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
         loginPressed,
         signUpPressed,
         fetchSavedImg,
-      }}>
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

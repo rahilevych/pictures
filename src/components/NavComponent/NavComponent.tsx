@@ -1,8 +1,10 @@
-import React, { FC, useContext } from 'react';
-import './NavComponent.scss';
-import { Link, NavLink } from 'react-router-dom';
-import SearchComponent from '../SearchComponent/SearchComponent';
-import { AuthContext } from '../../context/AutorizationContext';
+import React, { FC, useContext } from "react";
+import "./NavComponent.scss";
+import { Link, NavLink } from "react-router-dom";
+import SearchComponent from "../SearchComponent/SearchComponent";
+import { AuthContext } from "../../context/AutorizationContext";
+
+// REVIEW remove unused types declarations
 type NavComponentProps = {
   input: React.ChangeEventHandler<HTMLInputElement>;
 };
@@ -22,18 +24,18 @@ function NavComponent() {
   };
 
   return (
-    <nav className='nav'>
-      <div className='container nav__container'>
-        <NavLink to={'/'}>
-          <p className='nav__logo'>LOGO</p>
+    <nav className="nav">
+      <div className="container nav__container">
+        <NavLink to={"/"}>
+          <p className="nav__logo">LOGO</p>
         </NavLink>
         {!isLoggedIn && (
-          <Link to='/registration'>
-            <div className='registration__links'>
-              <button className='nav__btn' onClick={handleLogin}>
+          <Link to="/registration">
+            <div className="registration__links">
+              <button className="nav__btn" onClick={handleLogin}>
                 Log in
               </button>
-              <button className='nav__btn' onClick={handleSignUp}>
+              <button className="nav__btn" onClick={handleSignUp}>
                 Sign up
               </button>
             </div>
@@ -41,11 +43,11 @@ function NavComponent() {
         )}
         {isLoggedIn && (
           <>
-            <button className='nav__btn' onClick={logOut}>
+            <button className="nav__btn" onClick={logOut}>
               Log out
             </button>
-            <NavLink to={'/saved'}>
-              <p className='nav__logo'>saved images</p>
+            <NavLink to={"/saved"}>
+              <p className="nav__logo">saved images</p>
             </NavLink>
           </>
         )}

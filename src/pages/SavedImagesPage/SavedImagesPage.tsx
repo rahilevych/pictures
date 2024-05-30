@@ -1,9 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { AuthContext } from '../../context/AutorizationContext';
-import { auth, db } from '../../config/firebase';
-import { collection, onSnapshot, query } from 'firebase/firestore';
-import './SavedImagesPage.scss';
+import React, { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../context/AutorizationContext";
+import { auth, db } from "../../config/firebase";
+import { collection, onSnapshot, query } from "firebase/firestore";
+import "./SavedImagesPage.scss";
 const SavedImagesPage = () => {
+  // REVIEW as I understand, only this component consumes the fetched images. If that is the case, why not fetching them here?  "states shoudl be declared as closed as possible to where they are needed"
   const { fetchSavedImg, images } = useContext(AuthContext);
   console.log(auth.currentUser);
 
@@ -37,14 +38,14 @@ const SavedImagesPage = () => {
   }, []);
 
   return (
-    <div className='wrapper saved__wrapper'>
-      <div className='container saved__container'>
-        <main className='saved'>
-          <div className='saved__images'>
+    <div className="wrapper saved__wrapper">
+      <div className="container saved__container">
+        <main className="saved">
+          <div className="saved__images">
             {images &&
               images.map((url, index) => (
-                <div className='image'>
-                  <img src={url.url} alt='' />
+                <div className="image">
+                  <img src={url.url} alt="" />
                 </div>
               ))}
           </div>
