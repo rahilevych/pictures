@@ -1,9 +1,6 @@
-import { FC, useContext } from 'react';
+import { useContext } from 'react';
 import './SearchComponent.scss';
 import { ImagesContext } from '../../context/ImagesContext';
-type SearchComponentProps = {
-  input: React.ChangeEventHandler<HTMLInputElement>;
-};
 
 function SearchComponent() {
   const { setTag, setError } = useContext(ImagesContext);

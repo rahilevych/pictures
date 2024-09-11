@@ -1,18 +1,9 @@
-import { FC, useContext } from 'react';
+import { useContext } from 'react';
 import MainContentComponent from '../MainContentComponent/MainContentComponent';
 import './MainBlockComponent.scss';
-import { ImageType } from '../../types/ImageType';
-import { Pagination, Typography } from '@mui/material';
+import { Pagination } from '@mui/material';
 import { ImagesContext } from '../../context/ImagesContext';
 import SearchComponent from '../SearchComponent/SearchComponent';
-
-// type MainBlockComponentProps = {
-//   images: ImageType[] | null;
-//   input: React.ChangeEventHandler<HTMLInputElement>;
-//   amountOfPages: number;
-//   changePage(e: React.ChangeEvent<unknown>, value: number): void;
-//   currentPage: number;
-// };
 
 const MainBlockComponent = () => {
   const { currentPage, amountOfPages, setCurrentPage, error } =

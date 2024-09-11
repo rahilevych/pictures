@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import './SavedImagesPage.scss';
-import { Navigate, useParams } from 'react-router';
+import { Navigate } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import { SaveImgContext } from '../../context/SaveImgContex';
 const SavedImagesPage = () => {
@@ -17,7 +17,7 @@ const SavedImagesPage = () => {
         <main className='saved'>
           <div className='saved__images'>
             {images &&
-              images.map((image, index) => (
+              images.map((image) => (
                 <div className='saved__block'>
                   <NavLink to={`/image/${image.id}`}>
                     <div className='image'>

@@ -7,21 +7,11 @@ import {
   signOut,
 } from 'firebase/auth';
 import { auth, db } from '../config/firebase';
-import { Navigate } from 'react-router';
-import {
-  arrayRemove,
-  arrayUnion,
-  doc,
-  getDoc,
-  setDoc,
-  updateDoc,
-} from 'firebase/firestore';
-import { ImageType } from '../types/ImageType';
-import { set } from 'firebase/database';
-import toast from 'react-hot-toast';
+
+import { doc, setDoc } from 'firebase/firestore';
+
 import { firebaseErrors } from '../components/ErrorsForFirebase';
 import { FirebaseError } from 'firebase/app';
-//define type of context
 
 type AuthContextType = {
   user: UserType | null;
@@ -40,7 +30,6 @@ type AuthContextType = {
   isLoggedIn: boolean;
 };
 
-//define the initial value of context
 const initAuthContextValue = {
   user: {} as UserType,
   setUser: () => {
@@ -68,8 +57,6 @@ const initAuthContextValue = {
   loginPressed: false,
   signUpPressed: false,
 };
-
-//define type of props the AuthContextProvider recived
 
 type AuthContextProviderProps = {
   children: ReactNode;

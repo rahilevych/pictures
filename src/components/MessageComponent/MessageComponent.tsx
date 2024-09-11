@@ -1,4 +1,4 @@
-import React, { FC, useContext } from 'react';
+import { FC, useContext } from 'react';
 import './MessageComponent.scss';
 import { CommentsContext } from '../../context/CommentsContext';
 import { auth, db } from '../../config/firebase';

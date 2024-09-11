@@ -1,8 +1,4 @@
-import React from 'react';
-
-type Props = {};
-
-const MainFilters = (props: Props) => {
+const MainFilters = () => {
   return <div>MainFilters</div>;
 };
 

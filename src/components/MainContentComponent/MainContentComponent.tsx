@@ -1,11 +1,8 @@
-import { FC, useContext } from 'react';
+import { useContext } from 'react';
 
 import ImageComponent from '../ImageComponent/ImageComponent';
 import './MainContentComponent.scss';
 import { ImagesContext } from '../../context/ImagesContext';
-// type MainContentComponentProps = {
-//   images: ImageType[] | null;
-// };
 
 function MainContentComponent() {
   const { images, error } = useContext(ImagesContext);

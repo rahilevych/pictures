@@ -1,32 +1,23 @@
-import React, { FC, useContext } from 'react';
+import { useContext } from 'react';
 import './NavComponent.scss';
-import { Link, NavLink, Navigate } from 'react-router-dom';
-import SearchComponent from '../SearchComponent/SearchComponent';
+import { Link, NavLink } from 'react-router-dom';
+
 import { AuthContext } from '../../context/AutorizationContext';
-import toast from 'react-hot-toast';
-type NavComponentProps = {
-  input: React.ChangeEventHandler<HTMLInputElement>;
-};
 
 function NavComponent() {
   const { isLoggedIn, logOut, setLoginPressed, setSignUpPressed } =
     useContext(AuthContext);
   console.log(isLoggedIn);
 
-  const handleSignUp = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleSignUp = () => {
     setLoginPressed(false);
     setSignUpPressed(true);
   };
-  const handleLogin = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleLogin = () => {
     setLoginPressed(true);
     setSignUpPressed(false);
   };
-  const notify = () => toast('You are logged out ');
-  // if (!isLoggedIn) {
-  //   notify();
 
-  //   return <Navigate to={'/'} />;
-  // }
   return (
     <nav className='nav'>
       <div className='container nav__container'>
