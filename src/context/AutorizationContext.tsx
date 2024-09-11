@@ -1,5 +1,5 @@
 import { ReactNode, createContext, useEffect, useState } from 'react';
-import { UserType } from '../assets/types/UserType';
+import { UserType } from '../types/UserType';
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -9,29 +9,21 @@ import {
 import { auth, db } from '../config/firebase';
 import { Navigate } from 'react-router';
 import {
-  addDoc,
   arrayRemove,
   arrayUnion,
-  collection,
   doc,
   getDoc,
-  getDocs,
-  query,
   setDoc,
   updateDoc,
 } from 'firebase/firestore';
-import { ImageType } from '../assets/types/ImageType';
+import { ImageType } from '../types/ImageType';
 import { set } from 'firebase/database';
+import toast from 'react-hot-toast';
+import { firebaseErrors } from '../components/ErrorsForFirebase';
+import { FirebaseError } from 'firebase/app';
 //define type of context
 
-type Image = {
-  url: string;
-};
-
 type AuthContextType = {
-  images: Image[] | null;
-  // setImages: (images: ImageType[]) => void;
-  fetchSavedImg: () => Promise<void>;
   user: UserType | null;
   email: string;
   password: string;
@@ -42,21 +34,14 @@ type AuthContextType = {
   setLoginPressed: (isPressed: boolean) => void;
   loginPressed: boolean;
   signUpPressed: boolean;
-
   register: () => Promise<void>;
   signIn: () => Promise<void>;
   logOut: () => Promise<void>;
-
-  addToFavorites: (image: { url: string }) => Promise<void>;
-  deleteToFavorites: (image: { url: string }) => Promise<void>;
-
   isLoggedIn: boolean;
 };
 
 //define the initial value of context
 const initAuthContextValue = {
-  images: null,
-  fetchSavedImg: () => Promise.resolve(),
   user: {} as UserType,
   setUser: () => {
     throw new Error('context not initialised');
@@ -74,10 +59,6 @@ const initAuthContextValue = {
   password: '',
   loggedIn: false,
   isLoggedIn: false,
-
-  addToFavorites: () => Promise.resolve(),
-  deleteToFavorites: () => Promise.resolve(),
-
   setSignUpPressed: () => {
     throw new Error('context not initialised');
   },
@@ -97,14 +78,12 @@ export const AuthContext = createContext<AuthContextType>(initAuthContextValue);
 
 export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   let [user, setUser] = useState<UserType | null>(null);
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  // const [loggedIn, setLoggedIn] = useState<boolean>(false);
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const [loggedOut, setLoggedOut] = useState<boolean>(false);
-  const [signUpPressed, setSignUpPressed] = useState<boolean>(true);
-  const [loginPressed, setLoginPressed] = useState<boolean>(false);
-  const [images, setImages] = useState<Image[] | null>(null);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loggedOut, setLoggedOut] = useState(false);
+  const [signUpPressed, setSignUpPressed] = useState(true);
+  const [loginPressed, setLoginPressed] = useState(false);
 
   const register = async () => {
     try {
@@ -117,77 +96,31 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
           imagesList: [],
         });
       }
-    } catch (error) {
-      console.log(error);
+    } catch (e) {
+      if (e instanceof FirebaseError) {
+        firebaseErrors(e);
+      }
     } finally {
       setEmail('');
       setPassword('');
     }
   };
 
-  const addToFavorites = async (image: { url: string }) => {
-    if (auth.currentUser) {
-      const userDocRef = doc(db, 'users', auth.currentUser.uid);
-      await updateDoc(userDocRef, {
-        imagesList: arrayUnion(image),
-      });
-    } else {
-      throw new Error('User is not authenticated');
-    }
-  };
-  const deleteToFavorites = async (image: { url: string }) => {
-    if (auth.currentUser) {
-      const userDocRef = doc(db, 'users', auth.currentUser.uid);
-      await updateDoc(userDocRef, {
-        imagesList: arrayRemove(image),
-      });
-    } else {
-      throw new Error('User is not authenticated');
-    }
-  };
-
-  const fetchSavedImg = async () => {
-    try {
-      const user = auth.currentUser;
-      if (!user) {
-        throw new Error('user not logged in');
-      }
-      const userDocRef = doc(db, 'users', user.uid);
-      const userDoc = await getDoc(userDocRef);
-      if (userDoc.exists()) {
-        const userData = userDoc.data();
-        setImages(userData.imagesList);
-      }
-
-      // const imagesCollectionRef = collection(db, 'users', userId, 'imagesList');
-      // const queryImages = query(imagesCollectionRef);
-      // const querySnapshot = await getDocs(queryImages);
-      // console.log(querySnapshot);
-      // const images = querySnapshot.docs.map((doc) => ({
-      //   id: doc.id,
-      //   ...doc.data(),
-      // }));
-      // console.log(userId);
-    } catch (error) {
-      console.error('error fetching', error);
-    }
-  };
-
   const signIn = async () => {
     try {
-      const isLoggedIn = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      if (isLoggedIn) {
+      await signInWithEmailAndPassword(auth, email, password);
+      if (user) {
         setIsLoggedIn(true);
         setLoggedOut(false);
+      } else {
       }
-    } catch (error) {
-      console.log(error);
+    } catch (e) {
+      if (e instanceof FirebaseError) {
+        firebaseErrors(e);
+      }
     }
   };
+
   const stayLoggedIn = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -209,9 +142,6 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       console.log(error);
     }
   };
-  // if (loggedOut) {
-  //   return <Navigate to={'registration'} replace={true} />;
-  // }
 
   useEffect(() => {
     stayLoggedIn();
@@ -220,8 +150,6 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   return (
     <AuthContext.Provider
       value={{
-        deleteToFavorites,
-        images,
         user,
         setUser,
         register,
@@ -230,14 +158,12 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
         email,
         password,
         signIn,
-        addToFavorites,
         logOut,
         isLoggedIn,
         setLoginPressed,
         setSignUpPressed,
         loginPressed,
         signUpPressed,
-        fetchSavedImg,
       }}>
       {children}
     </AuthContext.Provider>

@@ -1,5 +1,5 @@
 import { ReactNode, createContext, useState } from 'react';
-import { ImageType } from '../assets/types/ImageType';
+import { ImageType } from '../types/ImageType';
 import axios from 'axios';
 import { apiKey } from '../config/APIKey';
 
@@ -7,29 +7,37 @@ import { apiKey } from '../config/APIKey';
 type ImagesContextType = {
   images: ImageType[] | null;
   fetchData: () => Promise<void>;
-  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handlePageChange: (e: React.ChangeEvent<unknown>, value: number) => void;
   tag: string;
+  setTag: (tag: string) => void;
+  setCurrentPage: (page: number) => void;
   currentPage: number;
   amountOfPages: number;
+  setError: (error: string) => void;
+  error: string;
 };
 
 //create a type for react routes/components we are gonna give access to
-
 type ImagesContextProviderProps = {
   children: ReactNode;
 };
 
 //initial  value of all the variables(state variables and setters) and functions we share
-
 const initImagesContext = {
   images: [] as ImageType[] | null,
   fetchData: () => Promise.resolve(),
-  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => '',
-  handlePageChange: (e: React.ChangeEvent<unknown>, value: number) => 1,
   tag: '',
   currentPage: 1,
   amountOfPages: 0,
+  setTag: () => {
+    throw new Error('context not initialised');
+  },
+  setCurrentPage: () => {
+    throw new Error('context not initialised');
+  },
+  setError: () => {
+    throw new Error('context not initialised');
+  },
+  error: '',
 };
 
 //create context
@@ -42,55 +50,39 @@ export const ImagesContextProvider = ({
   children,
 }: ImagesContextProviderProps) => {
   const [images, setImages] = useState<null | ImageType[]>(null);
-  // const[url,setUrl]=useState('`https://pixabay.com/api/')
-  let [tag, setTag] = useState<string>('blue');
-  let [photosPerPage, setPhotoPerPage] = useState<number>(30);
-  let [amountOfPages, setAmountOfPages] = useState<number>(0);
-  let [currentPage, setCurrentPage] = useState<number>(1);
-
+  const [tag, setTag] = useState('blue');
+  const [photosPerPage, setPhotoPerPage] = useState(30);
+  const [amountOfPages, setAmountOfPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [error, setError] = useState('');
   const fetchData = async () => {
     try {
       const response = await axios.get(
         `https://pixabay.com/api/?key=${apiKey}&q=${tag}&per_page=${photosPerPage}&page=${currentPage}`
       );
-      setImages(response.data.hits);
-      console.log(response.data);
-      setAmountOfPages(Math.ceil(response.data.totalHits / photosPerPage));
+      if (response.data.hits.length === 0) {
+        setError('No matches');
+      } else {
+        setImages(response.data.hits);
+        setAmountOfPages(Math.ceil(response.data.totalHits / photosPerPage));
+      }
     } catch (error) {
-      console.log(error);
+      setError('Failed to fetch images.');
     }
   };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value) {
-      setTag(e.target.value);
-    } else if (e.target.value === '') {
-      setTag('blue');
-      // setCurrentPage(1);
-    }
-  };
-  const handlePageChange = (
-    e: React.ChangeEvent<unknown>,
-    value: number
-  ): void => {
-    setCurrentPage(value);
-  };
-  // const removeImage = (id:number)=>{
-  //   if(images){
-  //     setImages(images.filter(image=>image.id!==id))
-  //   }
-  // }
 
   return (
     <ImagesContext.Provider
       value={{
         images,
         fetchData,
-        handleInputChange,
         tag,
         currentPage,
         amountOfPages,
-        handlePageChange,
+        setTag,
+        setCurrentPage,
+        setError,
+        error,
       }}>
       {children}
     </ImagesContext.Provider>
