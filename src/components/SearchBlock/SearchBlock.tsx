@@ -9,11 +9,11 @@ type SearchBlockProps = {
 
 function SearchBlock() {
   return (
-    <header className='search-block'>
+    <div className='search-block'>
       <div className='container search-block__container'>
         <SearchComponent />
       </div>
-    </header>
+    </div>
   );
 }
 
