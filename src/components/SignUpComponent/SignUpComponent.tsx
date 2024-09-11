@@ -2,14 +2,15 @@ import React, { useContext, useState } from 'react';
 import './SignUpComponent.scss';
 
 import { AuthContext } from '../../context/AutorizationContext.tsx';
+import toast from 'react-hot-toast';
+import { Navigate } from 'react-router';
 
 const SignUpComponent = () => {
   const [errors, setErrors] = useState<{ email?: string; password?: string }>(
     {}
   );
-  const { register, setEmail, setPassword, user, email, password } =
-    useContext(AuthContext);
-
+  const { register, setEmail, setPassword, user } = useContext(AuthContext);
+  const signup = () => toast.success('You are signed up !');
   const handleInputChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setEmail(value);
@@ -47,10 +48,11 @@ const SignUpComponent = () => {
     }
     return '';
   };
+  if (user) {
+    signup();
+    return <Navigate to={'/'} replace={true} />;
+  }
 
-  console.log(user);
-  console.log(email);
-  console.log(password);
   return (
     <div className='signup'>
       <form onSubmit={submitForm}>
