@@ -35,5 +35,38 @@ $font-color: white;
         display: flex;
         align-items: center;
         justify-content: space-between;
+        i {
+            transition: all 0.5s ease;
+            &:hover {
+                color: #778bdc;
+            }
+        }
+    }
+    &__link {
+        cursor: pointer;
+        width: 2.3rem;
+        text-decoration: none;
+        color: white;
+        font-size: 1.25rem;
+    }
+    &__logo {
+        &-block {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 0.5rem;
+            font-size: 1.25rem;
+            text-transform: uppercase;
+            transition: all 0.5s ease;
+            p {
+                transition: all 0.5s ease;
+                &:hover {
+                    color: #778bdc;
+                }
+            }
+            &:hover {
+                color: #778bdc;
+            }
+        }
     }
 }
