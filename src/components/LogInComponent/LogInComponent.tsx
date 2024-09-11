@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-
 import './LogInComponent.scss';
 import { AuthContext } from '../../context/AutorizationContext';
 import { auth } from '../../config/firebase';
@@ -7,8 +6,7 @@ import { Navigate } from 'react-router';
 import toast from 'react-hot-toast';
 
 const LogInComponent = () => {
-  const { signIn, setPassword, setEmail, email, password, isLoggedIn } =
-    useContext(AuthContext);
+  const { signIn, setPassword, setEmail, isLoggedIn } = useContext(AuthContext);
   const [errors, setErrors] = useState<{ email?: string; password?: string }>(
     {}
   );
@@ -52,9 +50,9 @@ const LogInComponent = () => {
   };
 
   console.log(auth.currentUser);
-  const notify = () => toast('You are logged succesfully');
+  const loginNotify = () => toast.success('You are logged in');
   if (isLoggedIn) {
-    notify();
+    loginNotify();
     return <Navigate to={'/'} replace={true} />;
   }
 
