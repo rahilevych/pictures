@@ -1,0 +1,63 @@
+.message {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+
+    &__img {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: white;
+        border-color: 1px solid #778bdc;
+        margin-right: 10px;
+        i {
+            color: #778bdc;
+            font-size: 2rem;
+        }
+    }
+
+    &__desc {
+        flex: 1;
+        width: 100%;
+        &__info {
+            margin-bottom: 5px;
+            &__user-date {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                &__user {
+                    font-weight: bold;
+                }
+                &__date {
+                    font-size: 0.85rem;
+                    color: #999;
+                }
+            }
+        }
+        &__text {
+            font-size: 0.95rem;
+            color: #333;
+        }
+    }
+    &__del {
+        margin-left: 10px;
+        cursor: pointer;
+        color: #778bdc;
+        transition: color 0.3s ease;
+        &:hover {
+            color: #778bdc;
+        }
+        i {
+            font-size: 1.25rem;
+        }
+    }
+}
