@@ -1,8 +1,8 @@
 import { ReactNode, createContext, useState } from 'react';
 import { ImageType } from '../types/ImageType';
 import axios from 'axios';
-import { apiKey } from '../config/APIKey';
 
+const apiKey = import.meta.env.VITE_API_KEY;
 //define the type of my context
 type ImagesContextType = {
   images: ImageType[] | null;
