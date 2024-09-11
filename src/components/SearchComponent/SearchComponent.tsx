@@ -6,7 +6,17 @@ type SearchComponentProps = {
 };
 
 function SearchComponent() {
-  const { handleInputChange } = useContext(ImagesContext);
+  const { setTag, setError } = useContext(ImagesContext);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value) {
+      setTag(e.target.value);
+      setError('');
+    } else if (e.target.value === '') {
+      setTag('blue');
+      setError('');
+    }
+  };
+
   return (
     <div className='search'>
       <i className='ph ph-magnifying-glass search__icon'></i>
@@ -16,9 +26,6 @@ function SearchComponent() {
         placeholder='Search'
         onChange={handleInputChange}
       />
-      <button className='search__btn'>
-        All images <i className='ph ph-caret-down '></i>
-      </button>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-$bg-search: white;
+$bg-search: #f1f3fb;
 .search {
     position: relative;
     display: flex;
@@ -41,9 +41,15 @@ $bg-search: white;
         font-size: 1.25rem;
     }
 }
+@media (max-width: 768px) {
+    .search {
+        width: 30rem;
+    }
+}
 
 @media (max-width: 500px) {
     .search {
+        width: 20rem;
         &__btn {
             font-size: 0.75rem;
         }
