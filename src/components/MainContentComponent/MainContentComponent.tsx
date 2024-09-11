@@ -8,15 +8,16 @@ import { ImagesContext } from '../../context/ImagesContext';
 // };
 
 function MainContentComponent() {
-  const { images } = useContext(ImagesContext);
+  const { images, error } = useContext(ImagesContext);
   console.log(images);
   return (
     <>
       <div className='main-content'>
-        {images &&
-          images?.map((image, index) => (
-            <ImageComponent image={image} key={index} />
-          ))}
+        {images && images?.length > 0
+          ? images?.map((image, index) => (
+              <ImageComponent image={image} key={index} />
+            ))
+          : error && <div className='main-content__err'>{error}</div>}
       </div>
     </>
   );
