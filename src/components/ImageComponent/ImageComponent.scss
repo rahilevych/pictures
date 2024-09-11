@@ -3,9 +3,63 @@
     overflow: hidden;
     width: 100%;
     height: 25rem;
+    border-radius: 10px;
+
     img {
+        border-radius: 10px;
         width: 100%;
         height: 100%;
         object-fit: cover;
     }
+    &__dark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: radius 10px;
+        background-color: rgba($color: #000000, $alpha: 0.5);
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: space-between;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+        padding: 1.5rem;
+        z-index: 3;
+        &:hover {
+            opacity: 1;
+        }
+    }
+    &__icons {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 1rem;
+        color: white;
+        font-size: 1rem;
+    }
+
+    &__icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 1.8rem;
+        height: 1.8rem;
+        border: 1px solid white;
+        border-radius: 5px;
+        padding: 0.25rem;
+        transition: all 0.5s ease;
+        &:hover {
+            background-color: #778bdc;
+        }
+    }
+    &__tags {
+        color: white;
+    }
+    // &:hover {
+    //     .image__dark {
+    //         opacity: 1;
+    //     }
+    // }
 }
