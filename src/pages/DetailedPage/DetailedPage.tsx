@@ -1,13 +1,12 @@
-import React, { FC, useContext, useEffect } from 'react';
-import { NavLink, Navigate, useParams } from 'react-router-dom';
+import { useContext, useEffect } from 'react';
+import { Navigate, useParams } from 'react-router-dom';
 import './DetailedPage.scss';
-import { AuthContext } from '../../context/AutorizationContext';
-import { auth } from '../../config/firebase';
+
 import CommentComponent from '../../components/CommentComponent/CommentComponent';
 import MessageComponent from '../../components/MessageComponent/MessageComponent';
 import { ImagesContext } from '../../context/ImagesContext';
 import { CommentsContext } from '../../context/CommentsContext';
-import { SaveImgContext } from '../../context/SaveImgContex';
+// import { SaveImgContext } from '../../context/SaveImgContex';
 import { CommentType } from '../../types/CommentType';
 
 const DetailedPage = () => {
@@ -15,27 +14,27 @@ const DetailedPage = () => {
   const { images } = useContext(ImagesContext);
   const img = images?.find((image) => image.id === Number(id));
   const { comments, fetchComments } = useContext(CommentsContext);
-  const { isLoggedIn } = useContext(AuthContext);
-  const { addToSaved } = useContext(SaveImgContext);
+  // const { isLoggedIn } = useContext(AuthContext);
+  // const { addToSaved } = useContext(SaveImgContext);
 
-  const handleAddToFavorites = () => {
-    console.log(auth.currentUser?.uid);
-    if (img && isLoggedIn) {
-      addToSaved({
-        url: img?.largeImageURL,
-        tags: img.tags,
-        id: img.id.toString(),
-      })
-        .then(() => {
-          console.log('Image added to favorites');
-        })
-        .catch((error) => {
-          console.error('Error adding image to favorites:', error);
-        });
-    } else {
-      console.log('User must be logged in to add to favorites');
-    }
-  };
+  // const handleAddToFavorites = () => {
+  //   console.log(auth.currentUser?.uid);
+  //   if (img && isLoggedIn) {
+  //     addToSaved({
+  //       url: img?.largeImageURL,
+  //       tags: img.tags,
+  //       id: img.id.toString(),
+  //     })
+  //       .then(() => {
+  //         console.log('Image added to favorites');
+  //       })
+  //       .catch((error) => {
+  //         console.error('Error adding image to favorites:', error);
+  //       });
+  //   } else {
+  //     console.log('User must be logged in to add to favorites');
+  //   }
+  // };
   if (!img) {
     return <Navigate to={'/'}></Navigate>;
   }

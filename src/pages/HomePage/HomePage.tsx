@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import MainBlockComponent from '../../components/MainBlockComponent/MainBlockComponent';
 import { ImagesContext } from '../../context/ImagesContext';
 

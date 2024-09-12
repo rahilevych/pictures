@@ -10,7 +10,7 @@ const MainBlockComponent = () => {
     useContext(ImagesContext);
 
   const handlePageChange = (
-    e: React.ChangeEvent<unknown>,
+    _: React.ChangeEvent<unknown>,
     value: number
   ): void => {
     setCurrentPage(value);

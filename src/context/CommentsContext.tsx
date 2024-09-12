@@ -1,9 +1,8 @@
 // CommentsContext.tsx
-import React, { createContext, useState, ReactNode } from 'react';
+import { createContext, useState, ReactNode } from 'react';
 import { db } from '../config/firebase';
-import { arrayUnion, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import { CommentType } from '../types/CommentType';
-import { ImageWithComment } from '../types/ImageWithComment';
 
 type CommentsContextType = {
   comments: CommentType[];

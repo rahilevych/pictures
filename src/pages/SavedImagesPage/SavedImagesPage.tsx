@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import './SavedImagesPage.scss';
 import { Navigate } from 'react-router';
 import { NavLink } from 'react-router-dom';

@@ -1,20 +1,19 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import './AuthPage.scss';
 import SignUpComponent from '../../components/SignUpComponent/SignUpComponent';
 import LogInComponent from '../../components/LogInComponent/LogInComponent';
-import { NavLink } from 'react-router-dom';
+
 import { AuthContext } from '../../context/AutorizationContext';
-import toast from 'react-hot-toast';
 
 const AuthPage = () => {
   const { setLoginPressed, setSignUpPressed, signUpPressed, loginPressed } =
     useContext(AuthContext);
 
-  const handleSignUp = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+  const handleSignUp = (_: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     setLoginPressed(false);
     setSignUpPressed(true);
   };
-  const handleLogin = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+  const handleLogin = (_: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     setLoginPressed(true);
     setSignUpPressed(false);
   };

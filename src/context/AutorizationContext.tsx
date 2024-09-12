@@ -68,7 +68,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [loggedOut, setLoggedOut] = useState(false);
+
   const [signUpPressed, setSignUpPressed] = useState(true);
   const [loginPressed, setLoginPressed] = useState(false);
 
@@ -98,7 +98,6 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       await signInWithEmailAndPassword(auth, email, password);
       if (user) {
         setIsLoggedIn(true);
-        setLoggedOut(false);
       } else {
       }
     } catch (e) {
@@ -121,7 +120,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   const logOut = async () => {
     try {
       await signOut(auth);
-      setLoggedOut(true);
+
       setIsLoggedIn(false);
       setUser(null);
       console.log(auth.currentUser?.email);
