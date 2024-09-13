@@ -19,7 +19,7 @@ The website provides different features for registered and unregistered users.
 ### Registered users can do everything unregistered users can, plus:
 - Manage a wishlist: add or remove images from the saved list
 - Add and delete comments: share reviews and feedback on images
-- 
+
 ## 📽️ Development Process
 The project started with planning the main features. After that, I deepened my knowledge of Firebase by studying its documentation. The project was then divided into pages, which were further broken down into reusable components. Some components communicated via props, while others used the Context API for state management. For styling, I utilized the SASS preprocessor.
 
@@ -29,7 +29,7 @@ The project started with planning the main features. After that, I deepened my k
 - Improved understanding of the Context API
 - Enhanced TypeScript proficiency
 - Gained experience in working with APIs
-- 
+
 ## ⬆️ Future Improvements
 - Add a user profile page
 - Enhance responsiveness
