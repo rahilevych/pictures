@@ -7,7 +7,7 @@ This project was built to familiarize myself with Firebase and deepen my knowled
 - Firebase
 - SASS
 - Context API
-- 
+
 ## 🤙 Features
 The website provides different features for registered and unregistered users.
 
